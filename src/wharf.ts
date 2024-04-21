@@ -85,7 +85,7 @@ const skoptions = {
 
 // Create a new session kit instance
 export const sessionKit = new SessionKit({
-  appName: "wallet-login-example",
+  appName: "quicktokenizenft",
   chains,
   ui: new WebRenderer(),
   walletPlugins: [wcw, anchor],

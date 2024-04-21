@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "homepage": "http://ModdedOutlaw.github.io/quicktokenizenft",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",

@@ -111,91 +111,99 @@
         </tbody>
       </table>
 
-      <div class="card border-primary mx-auto rounded-table text-center">
-        <div class="card-body">
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6 text-center mb-3">
-              Receiver of LIFTIUM:
-              <input type="text" bind:value={receiver} class="form-control" />
-            </div>
-          </div>
-
-          <div>
+      <div class="card-deck">
+        <div class="card border-primary rounded-table text-center" >
+          <div class="card-body">
             <div class="row justify-content-center">
               <div class="col-12 col-md-6 text-center mb-3">
-                Amount (in millions of LIFTIUM):
-                <input
-                  type="number"
-                  min="1"
-                  step="1"
-                  bind:value={amountInMillions}
-                  class="form-control"
-                />
-                <button
-                  on:click={() =>
-                    transfer(
-                      receiver,
-                      (amountInMillions * 1000000).toFixed(4).toString() +
-                        " LIFTIUM"
-                    )}
-                  >Transfer {formattedAmount}
-                  LIFTIUM</button
-                >
+                Receiver of LIFTIUM:
+                <input type="text" bind:value={receiver} class="form-control" />
+              </div>
+            </div>
+
+            <div>
+              <div class="row justify-content-center">
+                <div class="col-12 col-md-6 text-center mb-3">
+                  Amount (in millions of LIFTIUM):
+                  <input
+                    type="number"
+                    min="1"
+                    step="1"
+                    bind:value={amountInMillions}
+                    class="form-control"
+                  />
+                  <button
+                    on:click={() =>
+                      transfer(
+                        receiver,
+                        (amountInMillions * 1000000).toFixed(4).toString() +
+                          " LIFTIUM"
+                      )}
+                    >Transfer {formattedAmount}
+                    LIFTIUM</button
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="card border-primary mx-auto rounded-table text-center">
-        <div class="card-body">
-          <div class="row justify-content-center">
-            <div class="col-12 col-md-6 text-center mb-3">
-              Receiver of NFT(s):
-              <input type="text" class="form-control" bind:value={receiver} />
+        <div class="card border-primary mx-auto rounded-table text-center">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-12 col-md-6 text-center mb-3">
+                Receiver of NFT(s):
+                <input type="text" class="form-control" bind:value={receiver} />
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button
+                class="btn btn-sm btn-secondary"
+                on:click={() => transferNFT(receiver, selectedAssetIds)}
+              >
+                TransferNFT(s)
+              </button>
+            </div>
+            <div class="text-center mb-3">
+              <button
+                class="btn btn-sm btn-secondary"
+                on:click={() => get_collection($session.actor.toString())}
+              >
+                Get 1 MIO asset IDs
+              </button>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+              {#each paginatedAssets as assetId (assetId)}
+                <button
+                  class:selected={selectedAssetIds.includes(assetId)}
+                  on:click={() => toggleSelection(assetId)}
+                  style="text-align: center; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 1em;"
+                >
+                  <img
+                    src="/img/QmUtXnoGHZ7aUNzEM3fk6LX6j65tXtvP2kQRPvn8NFyhJ5.jpg"
+                    alt=""
+                    class="button-image"
+                  />
+                  <span>{assetId}</span>
+                </button>
+              {/each}
             </div>
           </div>
-          <div class="text-center mb-3">
+          <div>
             <button
-              class="btn btn-sm btn-secondary"
-              on:click={() => transferNFT(receiver, selectedAssetIds)}
+              class="btn btn-primary"
+              on:click={() => (currentPage = Math.max(1, currentPage - 1))}
+              >Previous</button
             >
-              TransferNFT(s)
-            </button>
+            <button
+              class="btn btn-primary"
+              on:click={() =>
+                (currentPage = Math.min(
+                  Math.ceil(assets.length / itemsPerPage),
+                  currentPage + 1
+                ))}>Next</button
+            >
           </div>
-          <div class="text-center mb-3">
-            <button
-              class="btn btn-sm btn-secondary"
-              on:click={() => get_collection($session.actor.toString())}
-            >
-              Get 1 MIO asset IDs
-            </button>
-          </div>
-
-          {#each paginatedAssets as assetId (assetId)}
-            <button
-              class:selected={selectedAssetIds.includes(assetId)}
-              on:click={() => toggleSelection(assetId)}
-            >
-              <img
-                src="https://resizer.atomichub.io/images/v1/preview?ipfs=QmUtXnoGHZ7aUNzEM3fk6LX6j65tXtvP2kQRPvn8NFyhJ5&size=370&output=webp"
-                alt=""
-                class="button-image"
-              />
-              {assetId}
-            </button>{/each}
-        </div>
-        <div>
-          <button class="btn btn-primary" on:click={() => (currentPage = Math.max(1, currentPage - 1))}
-            >Previous</button
-          >
-          <button class="btn btn-primary"
-            on:click={() =>
-              (currentPage = Math.min(
-                Math.ceil(assets.length / itemsPerPage),
-                currentPage + 1
-              ))}>Next</button
-          >
         </div>
       </div>
     {:else}
