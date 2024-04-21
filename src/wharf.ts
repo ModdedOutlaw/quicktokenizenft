@@ -10,7 +10,16 @@ import { ContractKit } from "@wharfkit/contract";
 import { AccountKit } from "@wharfkit/account";
 import Account from "@wharfkit/contract";
 
-//import abi from "./eosio-abi.json" // ABI for the eosio.token contract
+
+
+interface Balance {
+  currency: string;
+  contract: string;
+  amount: string;
+  decimals: string;
+}
+
+type Configuration = Balance[];
 
 interface ResponseData {
   account: string;
@@ -70,30 +79,37 @@ const chains = [Chains.WAX];
 
 const contract = new Contract({ client: client });
 
+const skoptions = {
+  transactPlugins: [new TransactPluginResourceProvider()],
+}
+
 // Create a new session kit instance
 export const sessionKit = new SessionKit({
   appName: "wallet-login-example",
   chains,
   ui: new WebRenderer(),
   walletPlugins: [wcw, anchor],
-});
+
+},skoptions);
 
 // Storage for the current user session
 export let session: Writable<Session | undefined> = writable();
 export let upliftium_image: Writable<Session | string> = writable();
 export let upliftium_hi_data: Writable<Session | UpliftiumHiData> = writable();
 export let assetsStore = writable([]);
-export let tokensStore = writable([]);
+export let tokensStore: Writable<Session | string> = writable();
 
 export async function transfer(name: string, quantity: string) {
   let sessionValue: Session | undefined;
   session.subscribe((value) => (sessionValue = value));
   console.log(sessionValue.permissionLevel);
   const transactionArguments = {
+
     action: {
       account: "tokenizednft",
       name: "transfer",
       authorization: [sessionValue.permissionLevel],
+    
       data: {
         from: sessionValue.permissionLevel.actor.toString(),
         to: name,
@@ -117,6 +133,7 @@ export async function transferNFT(name: string, assetID: UInt64Type) {
   session.subscribe((value) => (sessionValue = value));
   console.log(sessionValue.permissionLevel);
   const transactionArguments = {
+
     action: {
       account: "atomicassets",
       name: "transfer",
@@ -174,9 +191,6 @@ export async function get_collection(name: string) {
       name +
       "&page=1&limit=1000&order=desc&sort=asset_id",
   });
-  //wax.api.atomicassets.io/atomicassets/v1/assets?collection_name=upliftium.hi&owner=modded.gm&page=1&limit=500&order=desc&sort=asset_id
-
-  //const responseData = upliftium_collection_response as { data: ResponseData[] };
 
   console.log(upliftium_collection_response);
 
@@ -222,18 +236,24 @@ export async function get_info(name: string) {
 
 //'https://wax.blokcrafters.io/v2/state/get_tokens?account=modded.gm'
 //api/topholders/CHAIN/CONTRACT/TOKEN/NUM
+////tokenbalance/CHAIN/ACCOUNT/CONTRACT/TOKEN
 export async function get_tokens(name: string) {
   const response = await clientWaxLight.call({
-    path: "/api/balances/wax/" + name,
+    path: "/api/tokenbalance/wax/"+name+"/tokenizednft/LIFTIUM",
   });
+  console.log(typeof response);
+   // Convert response to a number
+   const responseNumber = Number(response);
 
-  const response2 = await clientWaxLight.call({
-    path: "/api/topholders/wax/tokenizednft/LIFTIUM/10",
-  });
+   // Convert the number to a string
+   const responseString = responseNumber.toString();
+  tokensStore.set(responseString);
+  console.log(responseNumber);
+  console.log(responseString);
 
-  const responseData = response as { data: ResponseData[] };
+  // Search through response.balances array
+ 
+  //console.log(tokenizedNft);
 
-  console.log(responseData.balances);
-  console.log(response2);
-  tokensStore.set(responseData.balances);
+
 }
