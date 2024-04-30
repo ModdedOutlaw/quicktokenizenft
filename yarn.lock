@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@fortawesome/fontawesome-free@^6.5.2":
+  version "6.5.2"
+  resolved "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.5.2.tgz"
+  integrity sha512-hRILoInAx8GNT5IMkrtIt9blOdrqHOnPBH+k70aWUAqPZPgopb9G5EQJFpaBx/S8zp2fC+mPW349Bziuk1o28Q==
+
 "@greymass/buoy@^1.0.3":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@greymass/buoy/-/buoy-1.0.4.tgz"
@@ -56,6 +61,26 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
+
+"@mvdschee/use@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@mvdschee/use/-/use-0.1.8.tgz"
+  integrity sha512-pdJJwXnMdCfq1gbu4hC2NQ/+FTZRuwXGaRBJk9q/H4ose4pPOZwKDK5etHlCIUfaUsoGeCs3aQ4etwYuMjA4Rg==
+
+"@nefty/use@^0.1.11":
+  version "0.1.14"
+  resolved "https://registry.npmjs.org/@nefty/use/-/use-0.1.14.tgz"
+  integrity sha512-rlPKYwWTogAYzctVS3LI5+r495zmAu15KV0cBxM/Cl+9Hf9pEN1yU0yUS5+4fJnGJvmhQwY83eJ0Siinph6wbg==
+  dependencies:
+    "@mvdschee/use" "0.1.8"
+    universal-authenticator-library "0.3.0"
+
+"@neftyblocks/blends@^0.3.8":
+  version "0.3.8"
+  resolved "https://registry.npmjs.org/@neftyblocks/blends/-/blends-0.3.8.tgz"
+  integrity sha512-CbEKDKUtkCINPFMrX44jQq3GckDzAUq2EAC5o30Xf7nSy4t+pk4LTGGX0G02E/2fUZ3wntj0/Q55T36Hx+Iu1Q==
+  dependencies:
+    "@nefty/use" "^0.1.11"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -1245,6 +1270,11 @@ typescript@^5.0.3:
   version "5.4.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.4.5.tgz"
   integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
+
+universal-authenticator-library@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/universal-authenticator-library/-/universal-authenticator-library-0.3.0.tgz"
+  integrity sha512-G/D9S1/b0fwRHPWHi+bPKjqHb/A5BqiOQ3k/R3MYPQQa0yxStn+Gf3oZjKKFnj9ZhELZ6FHOFRTXzcn/ggxXDg==
 
 universalify@^2.0.0:
   version "2.0.1"
